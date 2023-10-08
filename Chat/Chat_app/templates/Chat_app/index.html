@@ -1,0 +1,26 @@
+{% extends "Chat_app/base.html" %}
+{% block title %} Index {% endblock %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <div style="width: 600px;" class="cover-container d-flex p-3 mx-auto flex-column">
+            {% for message in messages %}
+                <div style="postion: relative; width: 300px; {% cycle 'left:0' 'left:300px' %}" class="card mb-2 ">
+                    <div class="card-body">
+                        <p class="card-text">{{ message.text }}</p>
+                        <p class="card-text"><small class="text-muted">{{ message.date }} by {{ message.author }}</small></p>
+                    </div>
+                </div>
+            {% endfor %}
+            <div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="w-100">
+                    {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
